@@ -178,6 +178,11 @@ export default function Home() {
       <div className="absolute inset-0 -z-50 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
       <Toaster richColors position="top-right" />
 
+      <div className='absolute right-4 top-4 flex flex-col place-items-end'>
+        <span className='font-bold text-black/50'>Developed by Maximiliano García</span>
+        <a className="opacity-60 underline" href="https://github.com/maxg-g/TranslateLLM" target='_blank'>Code on Github</a>
+      </div>
+
       <header className='ml-[-70px] mb-16 flex justify-center place-items-center'>
         <Image
           src={Logo}
@@ -191,11 +196,11 @@ export default function Home() {
 
       <section className="flex flex-col mx-4 lg:mx-0 md:flex-row gap-2 px-2 pt-2 pb-[2px] bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl">
         <div className='w-full'>
-          {nativeText.length > 0 &&
-            (<button onClick={clearAllText} className='absolute z-50 left-[90%] top-[4rem] md:left-[45%] md:top-[4.2rem] opacity-30 p-1 rounded-full hover:bg-gray-100 hover:text-black/60 focus:scale-95 translate-all'>
+          {nativeText.length > 0 && (
+            <button onClick={clearAllText} className='absolute z-50 left-[90%] top-[4rem] md:left-[45%] md:top-[4.2rem] opacity-30 p-1 rounded-full hover:bg-gray-200 hover:text-black hover:opacity-60 translate-all'>
               <X />
             </button>
-            )}
+          )}
 
           <div className='px-2 w-full bg-white rounded-t-xl h-12 flex flex-row gap-2 place-items-center font-bold text-black/80 border-t border-x border-gray-200 shadow-sm drop-shadow-sm'>
             {nativeLanguages.map(({ name, color, flag }) =>
