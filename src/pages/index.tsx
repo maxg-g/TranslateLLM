@@ -189,10 +189,10 @@ export default function Home() {
         <h1 className="text-[45px] font-bold">TranslateLLM</h1>
       </header>
 
-      <section className="flex gap-2 px-2 pt-2 pb-[2px] bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl">
+      <section className="flex flex-col mx-4 lg:mx-0 md:flex-row gap-2 px-2 pt-2 pb-[2px] bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl">
         <div className='w-full'>
           {nativeText.length > 0 &&
-            (<button onClick={clearAllText} className='absolute z-50 left-[45%] top-[4.2rem] opacity-30 p-1 rounded-full hover:bg-gray-100 hover:text-black/60 focus:scale-95 translate-all'>
+            (<button onClick={clearAllText} className='absolute z-50 left-[90%] top-[4rem] md:left-[45%] md:top-[4.2rem] opacity-30 p-1 rounded-full hover:bg-gray-100 hover:text-black/60 focus:scale-95 translate-all'>
               <X />
             </button>
             )}
@@ -230,7 +230,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className='max-w-[50%] min-w-[50%]'>
+        <div className='sm:w-full md:max-w-[50%] md:min-w-[50%]'>
           <div className='px-2 w-full bg-white rounded-t-xl h-12 flex flex-row gap-2 place-items-center font-bold text-black/80 border-t border-x border-gray-200 shadow-sm drop-shadow-sm overflow-x-auto whitespace-nowrap scrollbar-hidden'>
             {foreignLanguages.map(({ name, color, flag }) =>
               <button
@@ -275,7 +275,7 @@ export default function Home() {
           <>
             <h2 className='mb-8 flex justify-center text-[25px] font-bold'>Recent translations</h2>
 
-            <ul className='p-2 w-[70%] m-auto flex flex-col gap-2 bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
+            <ul className='mx-4 p-2 md:w-[70%] md:m-auto flex flex-col gap-2 bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
               {translations.map((
                 { nativeText, translateText, from, to, timestamp }:
                   { nativeText: string, translateText: string, from: string, to: string, timestamp: Date }) =>
