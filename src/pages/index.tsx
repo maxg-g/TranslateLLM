@@ -1,4 +1,6 @@
-import { useRef, useState } from 'react';
+"use client";
+
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image'
 import Logo from "@/media/logo.svg"
 import { Toaster, toast } from 'sonner'
@@ -60,6 +62,20 @@ export default function Home() {
   const [translatedText, setTranslatedText] = useState('');
   const [nativeLangSelector, setNativeLangSelector] = useState("");
   const [foreignLangSelector, setForeignLangSelector] = useState("");
+  const [translations, setTranslations] = useState<any[]>([]);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("past-translations");
+    if (storedData) {
+      setTranslations(JSON.parse(storedData));
+    }
+  }, []);
+
+  const saveTranslation = (newTranslation: any) => {
+    const updatedTranslations = [newTranslation, ...translations];
+    setTranslations(updatedTranslations);
+    localStorage.setItem("past-translations", JSON.stringify(updatedTranslations));
+  };
 
   const handleNativeText = (e: any) => {
     setNativeText(e.target.value);
@@ -139,8 +155,17 @@ export default function Home() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => setTranslatedText(data.result.content))
-      .catch(() => toast.error('Something went wrong'));
+      .then((data) => {
+        setTranslatedText(data.result.content)
+        saveTranslation({
+          nativeText,
+          translateText: data.result.content,
+          from: nativeLangSelector,
+          to: foreignLangSelector,
+          timestamp: new Date().toISOString()
+        });
+      })
+      .catch((err) => { toast.error('Something went wrong'); console.log(err) });
   }
 
   return (
@@ -162,7 +187,7 @@ export default function Home() {
       <section className="flex gap-2 px-2 pt-2 pb-[2px] bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl">
         <div className='w-full'>
           {nativeText.length > 0 &&
-            (<button onClick={clearAllText} className='absolute z-50 left-[45%] top-[4.2rem] text-black/30 p-1 rounded-full hover:bg-gray-100 hover:text-black/60 focus:scale-95 translate-all'>
+            (<button onClick={clearAllText} className='absolute z-50 left-[45%] top-[4.2rem] opacity-30 p-1 rounded-full hover:bg-gray-100 hover:text-black/60 focus:scale-95 translate-all'>
               <X />
             </button>
             )}
@@ -237,53 +262,31 @@ export default function Home() {
       <section className='py-16'>
         <h2 className='mb-8 flex justify-center text-[25px] font-bold'>Recent translations</h2>
 
-        <ul className='p-2 w-[70%] m-auto min-h-36 flex flex-col gap-2 bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
+        <ul className='p-2 w-[70%] m-auto flex flex-col gap-2 bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
 
-          <li className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-xl'>
-            <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center'>
-              <p className='font-bold '>🇬🇧 English</p>
-              <MoveRight className='text-black/30' />
-              <p className='font-bold '>Spanish 🇺🇾</p>
-            </div>
-            <p className='px-4 pb-4 pt-2 w-full h-full text-black/70 border-t '>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi, maxime nihil repellendus cum dolorem odit eius quibusdam eum, atque nobis, veritatis dolorum laboriosam porro neque tempora ex ad fuga labore.
-            </p>
-          </li>
+          {
+            translations.map((
+              { nativeText, translateText, from, to, timestamp }:
+                { nativeText: string, translateText: string, from: string, to: string, timestamp: Date }) =>
+              <li key={`${timestamp}`} className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-xl'>
+                
+                <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center border-b'>
+                  <p className='font-bold '>{from}</p>
+                  <MoveRight className='opacity-30' />
+                  <p className='font-bold '>{to}</p>
+                </div>
 
-          <li className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
-            <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center'>
-              <p className='font-bold '>🇬🇧 English</p>
-              <MoveRight className='text-black/30' />
-              <p className='font-bold '>Spanish 🇺🇾</p>
-            </div>
-            <p className='px-4 pb-4 pt-2 w-full h-full text-black/70 border-t '>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi, maxime nihil repellendus cum dolorem odit eius quibusdam eum, atque nobis, veritatis dolorum laboriosam porro neque tempora ex ad fuga labore.
-            </p>
-          </li>
-
-          <li className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
-            <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center'>
-              <p className='font-bold '>🇬🇧 English</p>
-              <MoveRight className='text-black/30' />
-              <p className='font-bold '>Spanish 🇺🇾</p>
-            </div>
-            <p className='px-4 pb-4 pt-2 w-full h-full text-black/70 border-t '>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi, maxime nihil repellendus cum dolorem odit eius quibusdam eum, atque nobis, veritatis dolorum laboriosam porro neque tempora ex ad fuga labore.
-            </p>
-          </li>
-
-          <li className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
-            <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center'>
-              <p className='font-bold '>🇬🇧 English</p>
-              <MoveRight className='text-black/30' />
-              <p className='font-bold '>Spanish 🇺🇾</p>
-            </div>
-            <p className='px-4 pb-4 pt-2 w-full h-full text-black/70 border-t '>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi, maxime nihil repellendus cum dolorem odit eius quibusdam eum, atque nobis, veritatis dolorum laboriosam porro neque tempora ex ad fuga labore.
-            </p>
-          </li>
-
-
+                <div className='flex flex-col text-black/70'>
+                  <p className='px-4 pb-4 pt-2 w-full h-full flex justify-items-center border-b-2 border-dashed border-gray-200 '>
+                    {nativeText}
+                  </p>
+                  <p className='px-4 pb-4 pt-2 w-full h-full  '>
+                    {translateText}
+                  </p>
+                </div>
+              </li>
+            )
+          }
         </ul>
 
       </section>
