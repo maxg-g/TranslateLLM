@@ -183,15 +183,18 @@ export default function Home() {
         <a className="opacity-60 underline" href="https://github.com/maxg-g/TranslateLLM" target='_blank'>Code on Github</a>
       </div>
 
-      <header className='ml-[-70px] mb-16 flex justify-center place-items-center'>
-        <Image
-          src={Logo}
-          width={110}
-          draggable={false}
-          alt="Translate symbol"
-          className='mr-[-1rem]'
-        />
-        <h1 className="text-[45px] font-bold">TranslateLLM</h1>
+      <header className='mb-8 md:mb-16 flex flex-col justify-center place-items-center'>
+        <div className='md:ml-[-50px] flex flex-row place-items-center'>
+          <Image
+            src={Logo}
+            width={110}
+            draggable={false}
+            alt="Translate symbol"
+            className='mr-[-1rem]'
+          />
+          <h1 className="text-[40px] font-bold text-black/80">TranslateLLM</h1>
+        </div>
+        <p className='text-center text-lg text-black/50 text-balance md:text-nowrap'>A simple proof of concept LLM-based translation tool using OpenAI API</p>
       </header>
 
       <section className="flex flex-col mx-4 lg:mx-0 md:flex-row gap-2 px-2 pt-2 pb-[2px] bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl">
