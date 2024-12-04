@@ -73,7 +73,7 @@ export default function Home() {
 
   const saveTranslation = (newTranslation: any) => {
     const updatedTranslations = [newTranslation, ...translations];
-    
+
     if (updatedTranslations.length > 4) {
       updatedTranslations.pop();
     }
@@ -257,11 +257,16 @@ export default function Home() {
             placeholder={placeholderForeignText}
           />
 
-          <button
-            onClick={handleCopy}
-            className="absolute right-6 bottom-4 text-black/30 hover:scale-95 p-2 rounded-full hover:bg-gray-100 hover:text-black/60 transition-all">
-            <Copy className='scale-90' />
-          </button>
+          {
+            translatedText !== "" && (
+              <button
+                onClick={handleCopy}
+                className="absolute right-6 bottom-4 text-black/30 hover:scale-95 p-2 rounded-full hover:bg-gray-100 hover:text-black/60 transition-all">
+                <Copy className='scale-90' />
+              </button>
+            )
+          }
+
         </div>
       </section>
 
