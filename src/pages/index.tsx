@@ -73,6 +73,11 @@ export default function Home() {
 
   const saveTranslation = (newTranslation: any) => {
     const updatedTranslations = [newTranslation, ...translations];
+    
+    if (updatedTranslations.length > 4) {
+      updatedTranslations.pop();
+    }
+
     setTranslations(updatedTranslations);
     localStorage.setItem("past-translations", JSON.stringify(updatedTranslations));
   };
