@@ -9,11 +9,13 @@ const nativeLanguages = [
   {
     name: "English",
     color: "red",
-    flag: "🇬🇧"
+    flag: "🇬🇧",
+    phrase: "What do you want to translate?"
   }, {
     name: "Spanish",
     color: "yellow",
-    flag: "🇪🇸"
+    flag: "🇪🇸",
+    phrase: "¿Que te gustaría traducir?"
   }
 ];
 
@@ -21,27 +23,33 @@ const foreignLanguages = [
   {
     name: "Italian",
     color: "green",
-    flag: "🇮🇹"
+    flag: "🇮🇹",
+    phrase: "Traduzione"
   }, {
     name: "German",
     color: "orange",
-    flag: "🇩🇪"
+    flag: "🇩🇪",
+    phrase: "Übersetzung"
   }, {
     name: "French",
     color: "blue",
-    flag: "🇫🇷"
+    flag: "🇫🇷",
+    phrase: "Traduction"
   }, {
     name: "Portuguese",
     color: "red",
-    flag: "🇵🇹"
+    flag: "🇵🇹",
+    phrase: "Tradução"
   }, {
     name: "Spanish",
     color: "yellow",
-    flag: "🇪🇸"
+    flag: "🇪🇸",
+    phrase: "Traducción"
   }, {
     name: "English",
     color: "red",
-    flag: "🇬🇧"
+    flag: "🇬🇧",
+    phrase: "Translation"
   },
 ];
 
@@ -74,6 +82,22 @@ export default function Home() {
         .catch((err) => console.error("Failed to copy: ", err));
     }
   };
+
+  const selectedNativeLanguage = nativeLanguages.find(
+    lang => lang.name === nativeLangSelector
+  );
+
+  const placeholderNativeText = selectedNativeLanguage
+    ? selectedNativeLanguage.phrase
+    : "What do you want to translate?";
+
+  const selectedForeignLanguage = foreignLanguages.find(
+    lang => lang.name === foreignLangSelector
+  );
+
+  const placeholderForeignText = selectedForeignLanguage
+    ? selectedForeignLanguage.phrase
+    : "Translation";
 
   const handleNativeLangSelection = (name: string) => {
     if (foreignLangSelector === name) {
@@ -163,7 +187,7 @@ export default function Home() {
             value={nativeText}
             onChange={handleNativeText}
             className="py-4 pl-4 pr-12 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none resize-none"
-            placeholder='What do you want to translate?'
+            placeholder={placeholderNativeText}
           />
           {nativeText.length > 0 && (
             <button
@@ -198,7 +222,7 @@ export default function Home() {
             value={translatedText}
             onChange={handleTranslatedText}
             className="p-4 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none focus:shadow-sm focus:drop-shadow-sm resize-none"
-            placeholder='Translation'
+            placeholder={placeholderForeignText}
           />
 
           <button
