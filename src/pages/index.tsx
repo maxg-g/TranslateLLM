@@ -215,6 +215,7 @@ export default function Home() {
             className="py-4 pl-4 pr-12 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none resize-none"
             placeholder={placeholderNativeText}
           />
+
           {nativeText.length > 0 && (
             <button
               onClick={translateText}
@@ -260,37 +261,36 @@ export default function Home() {
       </section>
 
       <section className='py-16'>
-        <h2 className='mb-8 flex justify-center text-[25px] font-bold'>Recent translations</h2>
+        {translations.length > 0 &&
+          <>
+            <h2 className='mb-8 flex justify-center text-[25px] font-bold'>Recent translations</h2>
 
-        <ul className='p-2 w-[70%] m-auto flex flex-col gap-2 bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
+            <ul className='p-2 w-[70%] m-auto flex flex-col gap-2 bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl'>
+              {translations.map((
+                { nativeText, translateText, from, to, timestamp }:
+                  { nativeText: string, translateText: string, from: string, to: string, timestamp: Date }) =>
+                <li key={`${timestamp}`} className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-xl'>
 
-          {
-            translations.map((
-              { nativeText, translateText, from, to, timestamp }:
-                { nativeText: string, translateText: string, from: string, to: string, timestamp: Date }) =>
-              <li key={`${timestamp}`} className='w-full h-36 flex flex-col bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-xl'>
-                
-                <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center border-b'>
-                  <p className='font-bold '>{from}</p>
-                  <MoveRight className='opacity-30' />
-                  <p className='font-bold '>{to}</p>
-                </div>
+                  <div className='py-2 h-12 w-full flex flex-row gap-4 justify-center place-items-center border-b'>
+                    <p className='font-bold '>{from}</p>
+                    <MoveRight className='opacity-30' />
+                    <p className='font-bold '>{to}</p>
+                  </div>
 
-                <div className='flex flex-col text-black/70'>
-                  <p className='px-4 pb-4 pt-2 w-full h-full flex justify-items-center border-b-2 border-dashed border-gray-200 '>
-                    {nativeText}
-                  </p>
-                  <p className='px-4 pb-4 pt-2 w-full h-full  '>
-                    {translateText}
-                  </p>
-                </div>
-              </li>
-            )
-          }
-        </ul>
-
+                  <div className='flex flex-col text-black/70'>
+                    <p className='px-4 pb-4 pt-2 w-full h-full flex justify-items-center border-b-2 border-dashed border-gray-200 '>
+                      {nativeText}
+                    </p>
+                    <p className='px-4 pb-4 pt-2 w-full h-full  '>
+                      {translateText}
+                    </p>
+                  </div>
+                </li>
+              )}
+            </ul>
+          </>
+        }
       </section>
-
     </main>
   );
 }
