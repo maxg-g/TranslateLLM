@@ -115,6 +115,7 @@ export default function Home() {
     }
 
     setForeignLangSelector(name);
+    setTranslatedText('')
   }
 
   const translateText = async () => {
