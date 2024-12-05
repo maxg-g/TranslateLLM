@@ -174,17 +174,16 @@ export default function Home() {
   }
 
   return (
-    <main className={`max-w-[1000px] m-auto mt-16 font-[family-name:var(--font-geist-mono)]`}>
-      <div className="absolute inset-0 -z-50 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <main className={`max-w-[1000px] m-auto pt-8 md:pt-16 font-[family-name:var(--font-geist-mono)]`}>
       <Toaster richColors position="top-right" />
 
-      <div className='absolute right-4 top-4 flex flex-col place-items-end'>
+      <div className='absolute w-full bottom-4 md:right-4 md:top-4 flex flex-col place-items-center justify-center md:justify-start md:place-items-end'>
         <span className='font-bold text-black/50'>Developed by Maximiliano García</span>
         <a className="opacity-60 underline" href="https://github.com/maxg-g/TranslateLLM" target='_blank'>Code on Github</a>
       </div>
 
       <header className='mb-8 md:mb-16 flex flex-col justify-center place-items-center'>
-        <div className='md:ml-[-50px] flex flex-row place-items-center'>
+        <div className='ml-[-30px] md:ml-[-50px] flex flex-row place-items-center'>
           <Image
             src={Logo}
             width={110}
@@ -199,11 +198,7 @@ export default function Home() {
 
       <section className="flex flex-col mx-4 lg:mx-0 md:flex-row gap-2 px-2 pt-2 pb-[2px] bg-gray-100 shadow-sm drop-shadow-sm border border-gray-200 rounded-2xl">
         <div className='w-full'>
-          {nativeText.length > 0 && (
-            <button onClick={clearAllText} className='absolute z-50 left-[90%] top-[4rem] md:left-[45%] md:top-[4.2rem] opacity-30 p-1 rounded-full hover:bg-gray-200 hover:text-black hover:opacity-60 translate-all'>
-              <X />
-            </button>
-          )}
+
 
           <div className='px-2 w-full bg-white rounded-t-xl h-12 flex flex-row gap-2 place-items-center font-bold text-black/80 border-t border-x border-gray-200 shadow-sm drop-shadow-sm'>
             {nativeLanguages.map(({ name, color, flag }) =>
@@ -222,20 +217,30 @@ export default function Home() {
             )}
           </div>
 
-          <textarea
-            value={nativeText}
-            onChange={handleNativeText}
-            className="py-4 pl-4 pr-12 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none resize-none"
-            placeholder={placeholderNativeText}
-          />
+          <div className="relative w-full">
+            {nativeText.length > 0 && (
+              <button
+                onClick={clearAllText}
+                className='absolute z-50 right-2 top-2 opacity-30 p-1 rounded-full hover:bg-gray-200 hover:text-black hover:opacity-60 translate-all'>
+                <X />
+              </button>
+            )}
 
-          {nativeText.length > 0 && (
-            <button
-              onClick={translateText}
-              className='px-2.5 py-1 absolute z-50 left-[39%] bottom-4 text-black/60 font-bold rounded-lg border border-gray-200 shadow-sm drop-shadow-sm bg-gray-100 hover:bg-white hover:text-black/60 focus:scale-95 translate-all'>
-              Translate
-            </button>
-          )}
+            <textarea
+              value={nativeText}
+              onChange={handleNativeText}
+              className="py-4 pl-4 pr-12 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none resize-none"
+              placeholder={placeholderNativeText}
+            />
+
+            {nativeText.length > 0 && (
+              <button
+                onClick={translateText}
+                className='absolute left-2 right-2 bottom-4 py-2 w-auto text-black/60 font-bold rounded-lg border border-gray-200 shadow-sm drop-shadow-sm bg-gray-100 hover:bg-white hover:text-black/60 focus:scale-95 translate-all'>
+                Translate
+              </button>
+            )}
+          </div>
         </div>
 
         <div className='sm:w-full md:max-w-[50%] md:min-w-[50%]'>
@@ -256,29 +261,29 @@ export default function Home() {
             )}
           </div>
 
-          <textarea
-            readOnly
-            ref={translatedTextRef}
-            value={translatedText}
-            onChange={handleTranslatedText}
-            className="p-4 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none focus:shadow-sm focus:drop-shadow-sm resize-none"
-            placeholder={placeholderForeignText}
-          />
+          <div className="relative w-full">
+            <textarea
+              readOnly
+              ref={translatedTextRef}
+              value={translatedText}
+              onChange={handleTranslatedText}
+              className="p-4 text-xl w-full h-72 bg-white shadow-sm drop-shadow-sm border border-gray-200 rounded-b-xl focus:outline-none focus:shadow-sm focus:drop-shadow-sm resize-none"
+              placeholder={placeholderForeignText}
+            />
 
-          {
-            translatedText !== "" && (
+            {translatedText !== "" && (
               <button
                 onClick={handleCopy}
-                className="absolute right-6 bottom-4 text-black/30 hover:scale-95 p-2 rounded-full hover:bg-gray-100 hover:text-black/60 transition-all">
+                className="absolute right-4 bottom-4 text-black/30 hover:scale-95 p-2 rounded-full hover:bg-gray-100 hover:text-black/60 transition-all">
                 <Copy className='scale-90' />
               </button>
-            )
-          }
+            )}
+          </div>
 
         </div>
       </section>
 
-      <section className='py-16'>
+      <section className='pt-16 pb-24'>
         {translations.length > 0 &&
           <>
             <h2 className='mb-8 flex justify-center text-[25px] font-bold'>Recent translations</h2>
