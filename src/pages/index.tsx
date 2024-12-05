@@ -175,7 +175,7 @@ export default function Home() {
 
   return (
     <main className={`max-w-[1000px] m-auto pt-8 md:pt-16 font-[family-name:var(--font-geist-mono)]`}>
-      <Toaster richColors position="top-right" />
+      <Toaster richColors />
 
       <div className='absolute w-full bottom-4 md:right-4 md:top-4 flex flex-col place-items-center justify-center md:justify-start md:place-items-end'>
         <span className='font-bold text-black/50'>Developed by Maximiliano García</span>
